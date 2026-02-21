@@ -19,6 +19,8 @@ const Signup = () => {
     setLoading(true);
 
     try {
+      const rememberMe = true;
+
       const { error } = await signUp.email({ name, email, password });
       if (error) {
         toast.error(error.message || "Could not create account");

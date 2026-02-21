@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Clock, Building2 } from "lucide-react";
+import { log } from "console";
 
 interface Job {
   id: string;
