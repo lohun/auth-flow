@@ -18,8 +18,18 @@ const ApplyJob = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    phone: "",
-    coverLetter: "",
+    linkedin: "",
+    github: "",
+    facebook: "",
+    twitter: "",
+    dribbble: "",
+    behance: "",
+    telephone: "",
+    work_experience: "",
+    education: "",
+    skills: "",
+    projects: "",
+    certifications: "",
   });
   const [resume, setResume] = useState<File | null>(null);
   const [parsing, setParsing] = useState(false);
@@ -43,7 +53,7 @@ const ApplyJob = () => {
           ...prev,
           name: data.name || prev.name,
           email: data.email || prev.email,
-          phone: data.phone || prev.phone,
+          telephone: data.phone || prev.telephone,
         }));
         toast.success("Resume parsed — fields auto-filled");
       } catch {
@@ -65,10 +75,9 @@ const ApplyJob = () => {
     setSubmitting(true);
     try {
       const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("email", form.email);
-      formData.append("phone", form.phone);
-      formData.append("coverLetter", form.coverLetter);
+      Object.entries(form).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
       if (resume) formData.append("resume", resume);
 
       await api.post(`/jobs/${id}/apply`, formData, {
@@ -125,7 +134,7 @@ const ApplyJob = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Full name</Label>
+              <Label htmlFor="name">Full Name</Label>
               <Input id="name" value={form.name} onChange={update("name")} required />
             </div>
 
@@ -135,19 +144,63 @@ const ApplyJob = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" type="tel" value={form.phone} onChange={update("phone")} />
+              <Label htmlFor="telephone">Telephone</Label>
+              <Input id="telephone" type="tel" value={form.telephone} onChange={update("telephone")} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="coverLetter">Cover letter</Label>
-              <Textarea
-                id="coverLetter"
-                rows={5}
-                placeholder="Why are you a great fit for this role?"
-                value={form.coverLetter}
-                onChange={update("coverLetter")}
-              />
+              <Label htmlFor="linkedin">LinkedIn</Label>
+              <Input id="linkedin" type="url" placeholder="https://linkedin.com/in/..." value={form.linkedin} onChange={update("linkedin")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="github">GitHub</Label>
+              <Input id="github" type="url" placeholder="https://github.com/..." value={form.github} onChange={update("github")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="facebook">Facebook</Label>
+              <Input id="facebook" type="url" placeholder="https://facebook.com/..." value={form.facebook} onChange={update("facebook")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="twitter">Twitter</Label>
+              <Input id="twitter" type="url" placeholder="https://twitter.com/..." value={form.twitter} onChange={update("twitter")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dribbble">Dribbble</Label>
+              <Input id="dribbble" type="url" placeholder="https://dribbble.com/..." value={form.dribbble} onChange={update("dribbble")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="behance">Behance</Label>
+              <Input id="behance" type="url" placeholder="https://behance.net/..." value={form.behance} onChange={update("behance")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="work_experience">Work Experience</Label>
+              <Textarea id="work_experience" rows={4} placeholder="Describe your work experience..." value={form.work_experience} onChange={update("work_experience")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="education">Education</Label>
+              <Textarea id="education" rows={4} placeholder="Describe your education..." value={form.education} onChange={update("education")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="skills">Skills</Label>
+              <Textarea id="skills" rows={3} placeholder="List your skills..." value={form.skills} onChange={update("skills")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="projects">Projects</Label>
+              <Textarea id="projects" rows={4} placeholder="Describe relevant projects..." value={form.projects} onChange={update("projects")} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="certifications">Certifications</Label>
+              <Textarea id="certifications" rows={3} placeholder="List your certifications..." value={form.certifications} onChange={update("certifications")} />
             </div>
 
             <Button type="submit" className="w-full" disabled={submitting}>
