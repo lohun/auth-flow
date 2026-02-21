@@ -29,8 +29,10 @@ const RecruiterDashboard = () => {
     title: "",
     company: "",
     location: "",
-    type: "Full-time",
+    type: "Onsite",
     description: "",
+    requirements: "",
+    deadline: "",
   });
 
   const { data: jobs = [], isLoading } = useQuery<Job[]>({
@@ -50,7 +52,7 @@ const RecruiterDashboard = () => {
       queryClient.invalidateQueries({ queryKey: ["recruiter-jobs"] });
       toast.success("Job posted!");
       setShowForm(false);
-      setForm({ title: "", company: "", location: "", type: "Full-time", description: "" });
+      setForm({ title: "", company: "", location: "", type: "Onsite", description: "", requirements: "", deadline: "" });
     },
     onError: () => toast.error("Failed to post job"),
   });
@@ -85,11 +87,11 @@ const RecruiterDashboard = () => {
               className="grid gap-4 sm:grid-cols-2"
             >
               <div className="space-y-2">
-                <Label htmlFor="title">Job title</Label>
+                <Label htmlFor="title">Job Title</Label>
                 <Input id="title" value={form.title} onChange={update("title")} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company">Company</Label>
+                <Label htmlFor="company">Company Name</Label>
                 <Input id="company" value={form.company} onChange={update("company")} required />
               </div>
               <div className="space-y-2">
@@ -97,22 +99,29 @@ const RecruiterDashboard = () => {
                 <Input id="location" value={form.location} onChange={update("location")} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="type">Type</Label>
+                <Label htmlFor="type">Job Type</Label>
                 <select
                   id="type"
                   value={form.type}
                   onChange={update("type")}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <option>Full-time</option>
-                  <option>Part-time</option>
-                  <option>Contract</option>
-                  <option>Remote</option>
+                  <option value="Onsite">Onsite</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Remote">Remote</option>
                 </select>
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="deadline">Deadline</Label>
+                <Input id="deadline" type="datetime-local" value={form.deadline} onChange={update("deadline")} required />
+              </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Job Description</Label>
                 <Textarea id="description" rows={4} value={form.description} onChange={update("description")} required />
+              </div>
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="requirements">Job Requirements</Label>
+                <Textarea id="requirements" rows={4} value={form.requirements} onChange={update("requirements")} required />
               </div>
               <div className="sm:col-span-2 flex justify-end gap-2">
                 <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>
